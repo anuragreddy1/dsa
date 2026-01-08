@@ -1,12 +1,9 @@
-from pydantic import BaseModel, EmailStr
+from sqlalchemy import Column, Integer, String
+from dsa_tracker.app.database import Base
 
-class UserCreate(BaseModel):
-    email: EmailStr
-    password: str
+class User(Base):
+    __tablename__ = "users"
 
-class UserResponse(BaseModel):
-    id: int
-    email: EmailStr
-
-    class Config:
-        orm_mode = True
+    id = Column(Integer, primary_key=True, index=True)
+    email = Column(String, unique=True, index=True, nullable=False)
+    hashed_password = Column(String, nullable=False)

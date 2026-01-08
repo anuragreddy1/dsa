@@ -1,7 +1,7 @@
 from fastapi import FastAPI
-from app.database import engine, Base
-from app.routes import auth
-from app.models import user  # 👈 VERY IMPORTANT (forces model loading)
+from dsa_tracker.app.database import engine, Base
+from dsa_tracker.app.routes import auth
+from dsa_tracker.app.models import user  # 👈 VERY IMPORTANT (forces model loading)
 
 app = FastAPI()
 
