@@ -1,5 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
+from fastapi.security import OAuth2PasswordBearer
+from jose import JWTError, jwt
+from dsa_tracker.app.utils.jwt import create_access_token
+from dsa_tracker.app.utils.auth import verify_password
 
 from dsa_tracker.app.database import SessionLocal
 from dsa_tracker.app.models.user import User
@@ -29,3 +33,17 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(new_user)
     return new_user
+@router.post("/login")
+def login(email: str, password: str, db: Session = Depends(get_db)):
+    user = db.query(User).filter(User.email == email).first()
+    if not user or not verify_password(password, user.hashed_password):
+        raise HTTPException(status_code=401, detail="Invalid credentials")
+
+    token = create_access_token({"sub": user.email})
+    return {"access_token": token, "token_type": "bearer"}
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login")
+
+@router.get("/me")
+def read_me(token: str = Depends(oauth2_scheme)):
+    return {"message": "You are authenticated", "token": token}
+
