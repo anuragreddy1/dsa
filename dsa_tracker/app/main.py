@@ -1,13 +1,10 @@
 from fastapi import FastAPI
-from dsa_tracker.app.database import engine, Base
-from dsa_tracker.app.routes import auth
-from dsa_tracker.app.models import user  # 👈 VERY IMPORTANT (forces model loading)
+from dsa_tracker.app.routes import auth, problems
 
 app = FastAPI()
 
-Base.metadata.create_all(bind=engine)
-
 app.include_router(auth.router)
+app.include_router(problems.router)
 
 @app.get("/")
 def root():
