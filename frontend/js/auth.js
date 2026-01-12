@@ -1,9 +1,11 @@
+const API = "http://localhost:8007";
+
 async function login() {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
   const res = await fetch(
-    `http://localhost:8007/auth/login?email=${email}&password=${password}`,
+    `${API}/auth/login?email=${email}&password=${password}`,
     { method: "POST" }
   );
 
@@ -11,11 +13,8 @@ async function login() {
 
   if (res.ok) {
     localStorage.setItem("token", data.access_token);
-    document.getElementById("msg").innerText =
-      "✅ Logged in successfully!";
+    window.location.href = "dashboard.html"; // 🔥 THIS WAS MISSING
   } else {
-    document.getElementById("msg").innerText =
-      "❌ Invalid credentials";
+    document.getElementById("msg").innerText = "Invalid login";
   }
 }
- 
