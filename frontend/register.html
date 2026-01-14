@@ -1,17 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Register</title>
+    <title>Register | DSA Tracker</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <h2>Register</h2>
+<div class="card">
+    <h2>Register</h2>
 
-  <input id="email" placeholder="Email" />
-  <input id="password" type="password" placeholder="Password" />
-  <button onclick="register()">Register</button>
+    <input id="email" placeholder="Email">
+    <input id="password" type="password" placeholder="Password">
 
-  <p id="msg"></p>
+    <button onclick="register()">Register</button>
 
-  <script src="app.js"></script>
+    <p id="msg"></p>
+    <p>Already registered? <a href="index.html">Login</a></p>
+</div>
+
+<script src="js/auth.js"></script>
 </body>
 </html>
